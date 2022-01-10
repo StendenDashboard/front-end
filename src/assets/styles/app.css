@@ -1,0 +1,27 @@
+:root {
+    --font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    --primary-theme: #2B88DE;
+    --primary-link: #2B88DE;
+    --primary-grey: #C4C4C4
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+#app{
+    font-family: var(--font-family);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
