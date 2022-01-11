@@ -1,7 +1,12 @@
 <template>
   <div id="dashboard"> 
-  hi
-
+    <div id="teacherbar">
+        <div class="teacher"><div class="profileImage"></div></div>
+        <div class="teacher"><div class="profileImage"></div></div>
+        <div class="teacher"><div class="profileImage"></div></div>
+    </div>
+    <div id="content"></div>
+    <img id="logo" src="@/assets/images/stenden.png"/>
   </div>
 </template>
 

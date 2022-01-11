@@ -1,6 +1,6 @@
 <template>
   <div id="login"> 
-       <div>
+      <div>
         <img id="logo" src="@/assets/images/stenden.png"/>
       </div>
       <div>
