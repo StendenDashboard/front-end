@@ -10,7 +10,7 @@
       </div>
       <br><br>
       <div>
-        <button class="button">Login</button>
+        <button class="button"  @click="login()">Login</button>
         <br><br>
         <p class="link" @click="switchPage(false)">No account? Create a new one</p>
       </div>
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: 'Login',
@@ -54,6 +55,21 @@ export default {
      
       document.getElementById('login').style.display="none";
       document.getElementById('signup').style.display="block";  
+    },
+    async login(){
+      var response = await axios.post('http://localhost:8080/authenticate', {
+          headers: {
+            'Content-Type':  'application/json'
+          },
+          data: {
+            'name': "Madlyaza",
+            'password': "Password"
+          }
+        })
+      console.log(
+        response.data
+      );
+
     }
   },
   mounted: function() {
