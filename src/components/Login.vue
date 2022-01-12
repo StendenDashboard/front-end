@@ -59,9 +59,9 @@ export default {
     async login(){
       var response = await axios.post('http://localhost:8080/authenticate', {
           headers: {
-            'Content-Type':  'application/json'
+            'content-type':  'application/json'
           },
-          data: {
+          body: {
             'name': "Madlyaza",
             'password': "Password"
           }
