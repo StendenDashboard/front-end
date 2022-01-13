@@ -4,9 +4,9 @@
         <img id="logo" src="@/assets/images/stenden.png"/>
       </div>
       <div>
-        <input type="text" class="input" name="username" placeholder="Username">
+        <input type="text" class="input" id="usernameLogin" name="usernameLogin" placeholder="Username">
         <br><br>
-        <input type="password" class="input" name="password" placeholder="Password">
+        <input type="password" class="input" id="passwordLogin" name="passwordLogin" placeholder="Password">
       </div>
       <br><br>
       <div>
@@ -57,19 +57,29 @@ export default {
       document.getElementById('signup').style.display="block";  
     },
     async login(){
-      var response = await axios.post('http://localhost:8080/authenticate', {
-          headers: {
-            'content-type':  'application/json'
-          },
-          body: {
-            'name': "Madlyaza",
-            'password': "Password"
-          }
+      try{
+        var response = await axios.post('http://localhost:8080/authenticate', {
+              name: document.getElementById('usernameLogin').value,
+              password: document.getElementById('passwordLogin').value
+            },{
+            headers: {
+              'content-type':  'application/json'
+            }
         })
-      console.log(
-        response.data
-      );
 
+        if(response.status == 200){
+          window.componentInstance.setBearer(response.data);
+          
+          if(window.componentInstance.getBearer() != null)
+            window.componentInstance.switcher(true);
+          else
+             alert("Er is momenteel een fout opgetreden.");
+        }
+
+      }catch(ex){
+        alert("Het ingevulde username en of wachtwoord zijn niet valide");
+      }
+         
     }
   },
   mounted: function() {
