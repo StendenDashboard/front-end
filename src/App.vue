@@ -8,6 +8,7 @@
 <script>
 import Login from './components/Login.vue'
 import Dashboard from './components/Dashboard.vue'
+import Properties from '../properties.json';
 
 export default {
   name: 'App',
@@ -32,6 +33,10 @@ export default {
           this.Dashboard = state;
           this.Login = false;
       },
+      applicationProperties: function(searcher){
+        if(Properties[searcher])
+          return Properties[searcher];
+      },
       getBearer: function () {
         return this.$storage.getStorageSync("jwt");
       },
@@ -44,6 +49,7 @@ export default {
   },
   mounted: function() {
     this.switcher(false);
+    this.applicationProperties();
   },
 }
 </script>

@@ -57,8 +57,9 @@ export default {
       document.getElementById('signup').style.display="block";  
     },
     async login(){
+
       try{
-        var response = await axios.post('http://localhost:8080/authenticate', {
+        var response = await axios.post(window.componentInstance.applicationProperties('api') +'authenticate', {
               name: document.getElementById('usernameLogin').value,
               password: document.getElementById('passwordLogin').value
             },{
