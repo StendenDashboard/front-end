@@ -22,17 +22,17 @@
       <img id="logo" src="@/assets/images/stenden.png"/>
     </div>
     <div>
-      <input type="text" class="input" name="username" placeholder="Username">
+      <input type="text" class="input" name="username" id="username" placeholder="Username">
       <br><br>
-      <input type="password" class="input" name="password" placeholder="Password">
+      <input type="password" class="input" name="password" id="password" placeholder="Password">
       <br><br>
       <input type="password" class="input" name="confirm" placeholder="Confirm Password">
       <br><br>
-      <input type="email" class="input" name="email" placeholder="Email">
+      <input type="email" class="input" name="email" id="email" placeholder="Email">
     </div>
     <br><br>
     <div>
-      <button class="button" @click="switchPage(true)">Create</button>
+      <button class="button" @click="signup()">Create</button>
       <br><br>
       <p class="link" @click="switchPage(true)" >Already have a account?</p>
     </div>
@@ -79,6 +79,32 @@ export default {
 
       }catch(ex){
         alert("Het ingevulde username en of wachtwoord zijn niet valide");
+      }
+         
+    },
+
+    async signup(){
+
+      try{
+        var response = await axios.post(window.componentInstance.applicationProperties('api') +'signup', {
+              name: document.getElementById('username').value,
+              password: document.getElementById('password').value,
+              profileImagePath: "",
+              email: document.getElementById('email').value
+            },{
+            headers: {
+              'content-type':  'application/json',
+              'accept': 'application/json'
+            }
+        })
+
+        if(response.status == 200)
+          this.switchPage(true);
+    
+
+      }catch(ex){
+        console.log(ex);
+        //alert("Vul alle gegevens in.");
       }
          
     }
