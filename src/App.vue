@@ -24,6 +24,7 @@ export default {
         Login: false,
         Dashboard: false,
         Upload: false,
+        userdata: [],
       }
   },
   methods: {
@@ -56,6 +57,15 @@ export default {
       },
       setBearer: function (bearer) {
         this.$storage.setStorageSync("jwt", bearer);
+      },
+      setUser: function (username, users) {
+        users.forEach((user, index) => {
+          if(user['name'] == username)
+            this.userdata = users[index];
+        });
+      },
+      getUser: function () {
+        return this.userdata;
       },
   },
   created () {

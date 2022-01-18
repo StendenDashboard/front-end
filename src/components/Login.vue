@@ -71,10 +71,20 @@ export default {
         if(response.status == 200){
           window.componentInstance.setBearer(response.data);
           
-          if(window.componentInstance.getBearer() != null)
-            window.componentInstance.switcher(true);
-          else
-             alert("Er is momenteel een fout opgetreden.");
+          if(window.componentInstance.getBearer() != null){
+            var users = await axios.get(window.componentInstance.applicationProperties('api') +'users', {   
+              headers: {
+                'content-type':  'application/json',
+                'authorization': 'Bearer '+window.componentInstance.getBearer(),
+              }
+            })
+
+            if(users.status == 200){
+              await window.componentInstance.setUser(document.getElementById('usernameLogin').value, users.data);
+              window.componentInstance.switcher(true);
+            }
+          }
+
         }
 
       }catch(ex){
