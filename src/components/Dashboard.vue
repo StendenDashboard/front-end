@@ -7,7 +7,7 @@
       <iframe v-if="video" :height="iframe.height" :width="iframe.width" :src="iframe.src" frameborder="0" allowfullscreen></iframe> <br>
     </div>
 
-  
+    <button id="upload" @click="uploadPage(true)">+</button>
     <img id="logo" src="@/assets/images/stenden.png"/>
   </div>
 </template>
@@ -30,6 +30,9 @@ export default {
       }
   },
   methods: {
+    uploadPage(state){
+      window.componentInstance.UploadPage(state);
+    },
     async callApi(){
         let users = await axios.get(window.componentInstance.applicationProperties('api') +'users', {   
             headers: {
@@ -54,7 +57,7 @@ export default {
           this.content = true;
 
           if(response.data[0]['content']['contentType']['name'] == 'video'){
-            this.iframe.src = response.data[0]['content']['path']+"?autoplay=1"
+            this.iframe.src = response.data[0]['content']['path']//+"?autoplay=1"
             this.video = true;
             return;
           }

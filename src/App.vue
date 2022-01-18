@@ -2,24 +2,28 @@
   <div id="app">
     <Login v-if="Login"/>
     <Dashboard v-if="Dashboard"/>
+    <Upload v-if="Upload"/>
   </div>
 </template>
 
 <script>
 import Login from './components/Login.vue'
 import Dashboard from './components/Dashboard.vue'
+import Upload from './components/Upload.vue'
 import Properties from '../properties.json';
 
 export default {
   name: 'App',
   components: {
     Login,
-    Dashboard
+    Dashboard,
+    Upload
   },
   data() {
       return {
         Login: false,
-        Dashboard: false
+        Dashboard: false,
+        Upload: false,
       }
   },
   methods: {
@@ -32,6 +36,16 @@ export default {
 
           this.Dashboard = state;
           this.Login = false;
+      },
+      UploadPage: function(state){
+          if(!state){
+            this.Dashboard = true;
+            this.Upload = state;
+            return;
+          } 
+
+          this.Dashboard = false;
+          this.Upload = state;
       },
       applicationProperties: function(searcher){
         if(Properties[searcher])
