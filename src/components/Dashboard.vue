@@ -3,8 +3,10 @@
 
     <div id="teacherbar"></div>
 
-    <div id="content" v-if="content">
-      <iframe v-if="video" :height="iframe.height" :width="iframe.width" :src="iframe.src" frameborder="0" allowfullscreen></iframe> <br>
+    <div id="content" v-if="content">  
+      <br><br>
+      <iframe v-if="video" :height="iframe.height" :width="iframe.width" :src="iframe.src" frameborder="0" allowfullscreen></iframe> <br><br>
+       <p>{{description_text}}</p>
     </div>
 
     <button id="upload" @click="uploadPage(true)">+</button>
@@ -25,6 +27,7 @@ export default {
           height: 550,
           width: 1000,
         },
+        description_text: "",
         content: false,
         video: true
       }
@@ -57,7 +60,8 @@ export default {
           this.content = true;
 
           if(response.data[0]['content']['contentType']['name'] == 'video'){
-            this.iframe.src = response.data[0]['content']['path']//+"?autoplay=1"
+            this.iframe.src = response.data[0]['content']['path']+"?autoplay=1"
+            this.description_text = response.data[0]['description'];
             this.video = true;
             return;
           }

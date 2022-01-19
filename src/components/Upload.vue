@@ -1,9 +1,57 @@
 <template>
   <div id="dashboard"> 
     <div id="teacherbar"></div>
-      <button @click="rssFeed()">-Feed</button>
-      <button @click="powerpoint()">-Powerpoint</button>
-      <button @click="event()">-Event</button>
+
+    <div id="content">
+      <div id="buttonBar">
+        <button id="RSSFeed" class='switchDiv' @click="setNewVisible('RSSFeed')" >RSS Feed</button>
+        <button id="Powerpoint" class='switchDiv' @click="setNewVisible('Powerpoint')" >Powerpoint</button>
+        <button id="Event" class='switchDiv' @click="setNewVisible('Event')" >Event</button>
+      </div>
+      <br><br><br><br>
+      <div id="RSSFeed" class='targetDiv'>
+        <p>Voeg RSS Feed toe.</p>
+        <br>
+        <input type="text" class="input" id="rssLink" placeholder="Link">
+        <br>
+        <input type="text" class="input" id="rssStartdate" placeholder="start date">
+        <br>
+        <input type="text" class="input" id="rssEnddate" placeholder="end date">
+        <br>
+        <button class='addButton' @click="rssFeed()">Voeg toe</button>
+      </div>
+      <div id="Powerpoint" class='targetDiv'>
+        <p>Voeg Powerpoint toe.</p>
+        <br>
+        <input type="text" class="input" id="powerpointPath" placeholder="path">
+        <br>
+        <br>
+        <button class='addButton' @click="powerpoint()">Voeg toe</button>
+      </div>
+      <div id="Event" class='targetDiv'>
+        <p>Voeg Event toe.</p>
+        <br>
+        <select class="input" id="eventType">
+          <option value="1">Video</option>
+          <option value="2">Text</option>
+        </select>
+        <br>
+        <input type="text" class="input" id="eventPath" placeholder="path">
+        <br>
+        <input type="text" class="input" id="description" placeholder="description">
+        <br>
+        <input type="text" class="input" id="eventStartdate" placeholder="start date">
+        <br>
+        <input type="text" class="input" id="eventEnddate" placeholder="end date">
+        <br>
+        <input type="text" class="input" id="eventDuration" placeholder="duration">
+        <br>
+        <button class='addButton' @click="event()">Voeg toe</button>
+      </div>
+      <br> 
+
+    </div>
+
     <button id="upload" @click="uploadPage(false)">-</button>
     <img id="logo" src="@/assets/images/stenden.png"/>
   </div>
@@ -11,6 +59,9 @@
 
 <script>
 import axios from 'axios';
+
+var allDiv;
+var currentVisible = "RSSFeed";
 
 export default {
   name: 'Upload',
@@ -23,23 +74,40 @@ export default {
           width: 1000,
         },
         content: false,
-        video: true
+        video: true,
       }
   },
   methods: {
+    setNewVisible(div){
+      currentVisible = div;
+      this.canvasDisplayer();
+    },
+    canvasDisplayer(){
+      allDiv.forEach(function(div) {
+        if(div.id == currentVisible) div.style.display="block";
+        else div.style.display="none";
+
+        var tablinks = document.querySelectorAll('.switchDiv');
+
+        tablinks.forEach(function(tab) {
+            tab.classList.remove("activeTab");  
+            if(tab.id == currentVisible) tab.className += " activeTab";
+        });
+      });
+    },
     async event(){
       var response = await axios.post(window.componentInstance.applicationProperties('api') +'event', {
             content: {
               contentType: {
-                id: 1
+                id: document.getElementById('eventType').value
               },
-              path: "test"
+              path: document.getElementById('eventPath').value
             },
             user_id: window.componentInstance.getUser()['id'],
-            description: "string",
-            startDateTime: "12-01-2022 13:52:43",
-            endDateTime: "20-01-2022 13:52:43",
-            duration: 30
+            description: document.getElementById('description').value,
+            startDateTime: document.getElementById('eventStartdate').value,
+            endDateTime: document.getElementById('eventEnddate').value,
+            duration: document.getElementById('eventDuration').value
           },{
           headers: {
             'content-type':  'application/json',
@@ -57,7 +125,7 @@ export default {
             user: {
               id: window.componentInstance.getUser()['id']
             },
-            path: "string"
+            path: document.getElementById('powerpointPath').value
           },{
           headers: {
             'content-type':  'application/json',
@@ -75,9 +143,9 @@ export default {
             user: {
               id: window.componentInstance.getUser()['id']
             },
-            link: "string",
-            startDateTime: "12-01-2022 13:52:43",
-            endDateTime: "20-01-2022 13:52:43"
+            link: document.getElementById('rssLink').value,
+            startDateTime: document.getElementById('rssStartdate').value,
+            endDateTime: document.getElementById('rssEnddate').value
           },{
           headers: {
             'content-type':  'application/json',
@@ -95,7 +163,8 @@ export default {
     },
   },
   mounted: function() {
-  
+    allDiv = document.querySelectorAll('.targetDiv');
+    this.canvasDisplayer();
   },
 }
 </script>
