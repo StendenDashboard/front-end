@@ -1,6 +1,4 @@
-# javaadvanced
-
-## Project setup
+# Project setup
 There are two steps you need to take before the project is running.<br>
 You need to pull the project and open it in visual studio code for example. Then you need to enter this command in the terminal:<br>
 ```
