@@ -113,8 +113,7 @@ export default {
     
 
       }catch(ex){
-        console.log(ex);
-        //alert("Vul alle gegevens in.");
+        alert("Er is iets fout gegaan bij het aanmaken van de gebruiker");
       }
          
     }

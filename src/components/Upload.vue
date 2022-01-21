@@ -96,31 +96,33 @@ export default {
       });
     },
     async event(){
-      var response = await axios.post(window.componentInstance.applicationProperties('api') +'event', {
-            content: {
-              contentType: {
-                id: document.getElementById('eventType').value
+      try{
+        var response = await axios.post(window.componentInstance.applicationProperties('api') +'event', {
+              content: {
+                contentType: {
+                  id: document.getElementById('eventType').value
+                },
+                path: document.getElementById('eventPath').value
               },
-              path: document.getElementById('eventPath').value
-            },
-            user_id: window.componentInstance.getUser()['id'],
-            description: document.getElementById('description').value,
-            startDateTime: document.getElementById('eventStartdate').value,
-            endDateTime: document.getElementById('eventEnddate').value,
-            duration: document.getElementById('eventDuration').value
-          },{
-          headers: {
-            'content-type':  'application/json',
-            'authorization': 'Bearer '+window.componentInstance.getBearer(),
-          }
-      })
+              user_id: window.componentInstance.getUser()['id'],
+              description: document.getElementById('description').value,
+              startDateTime: document.getElementById('eventStartdate').value,
+              endDateTime: document.getElementById('eventEnddate').value,
+              duration: document.getElementById('eventDuration').value
+            },{
+            headers: {
+              'content-type':  'application/json',
+              'authorization': 'Bearer '+window.componentInstance.getBearer(),
+            }
+        })
 
-      if(response.status == 200)
-        return alert("De event is succes vol geupload")
+        if(response.status == 200)
+          return alert("De event is succes vol geupload")
       
-      alert("Er is iets fout gegaan tijdens het uploaden van de event");
+      }catch(e){alert("Er is iets fout gegaan tijdens het uploaden van de event");}
     },
     async powerpoint(){
+      try{
       var response = await axios.post(window.componentInstance.applicationProperties('api') +'powerpoint', {
             user: {
               id: window.componentInstance.getUser()['id']
@@ -135,28 +137,28 @@ export default {
 
       if(response.status == 200)
         return alert("De powerpoint is succes vol geupload")
-      
-      alert("Er is iets fout gegaan tijdens het uploaden van de powerpoint");
+      }catch(e){alert("Er is iets fout gegaan tijdens het uploaden van de powerpoint");}
+  
     },
     async rssFeed(){
-      var response = await axios.post(window.componentInstance.applicationProperties('api') +'rss', {
-            user: {
-              id: window.componentInstance.getUser()['id']
-            },
-            link: document.getElementById('rssLink').value,
-            startDateTime: document.getElementById('rssStartdate').value,
-            endDateTime: document.getElementById('rssEnddate').value
-          },{
-          headers: {
-            'content-type':  'application/json',
-            'authorization': 'Bearer '+window.componentInstance.getBearer(),
-          }
-      })
+      try{
+        var response = await axios.post(window.componentInstance.applicationProperties('api') +'rss', {
+              user: {
+                id: window.componentInstance.getUser()['id']
+              },
+              link: document.getElementById('rssLink').value,
+              startDateTime: document.getElementById('rssStartdate').value,
+              endDateTime: document.getElementById('rssEnddate').value
+            },{
+            headers: {
+              'content-type':  'application/json',
+              'authorization': 'Bearer '+window.componentInstance.getBearer(),
+            }
+        })
 
-      if(response.status == 200)
-        return alert("De rssfeed is succes vol geupload")
-      
-      alert("Er is iets fout gegaan tijdens het uploaden van de rssfeed");
+        if(response.status == 200)
+          return alert("De rssfeed is succes vol geupload")
+      }catch(e){alert("Er is iets fout gegaan tijdens het uploaden van de rssfeed");}
     },
     uploadPage(state){
       window.componentInstance.UploadPage(state);
