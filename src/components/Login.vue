@@ -99,7 +99,7 @@ export default {
         var response = await axios.post(window.componentInstance.applicationProperties('api') +'signup', {
               name: document.getElementById('username').value,
               password: document.getElementById('password').value,
-              profileImagePath: "",
+              profileImagePath: "https://images.theconversation.com/files/419610/original/file-20210906-23-1mk17he.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop",
               email: document.getElementById('email').value
             },{
             headers: {
